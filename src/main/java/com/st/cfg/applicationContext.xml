@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Config Data Source -->
+	<bean id="mysqlDrive"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql:///ntsp713" />
+		<property name="username" value="root" />
+		<property name="password" value="Satish@3005" />
+	</bean>
+
+	<!-- config db with dao -->
+	<bean name="dao" class="com.st.dao.PatientImplDAO">
+		<constructor-arg ref="mysqlDrive"></constructor-arg>
+	</bean>
+	
+	<!-- config dao with serviceImpl -->
+	<bean name="hmngservice" class="com.st.service.HospitalMangServiceImpl">
+		<constructor-arg ref="dao"></constructor-arg>
+	</bean>
+	
+	<!-- config service with controller -->
+	<bean name="controller" class="com.st.controller.HospitalMangController">
+		<constructor-arg ref="hmngservice"></constructor-arg>
+	</bean>
+	
+</beans>
